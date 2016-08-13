@@ -1,5 +1,5 @@
 body {
-	background-color: whitesmoke;
+	background-color: white;
 	color: black;
 	font-family: 'Lato', sans-serif;
 	margin: 0;
@@ -16,6 +16,8 @@ textarea {
 	width: 20rem;
 }
 
-#feedback {
-	left: 36rem;
+#lead {
+	background-color: rgb(2, 71, 191);
+	height: 10rem;
+	width: 15rem;
 }
