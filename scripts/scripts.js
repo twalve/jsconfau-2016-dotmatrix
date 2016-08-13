@@ -1,7 +1,7 @@
 (function(){
 	const DTS = {
 		OPTIONS: {
-			height: 178,//480
+			height: 480,//480
 			lead: 160,
 			sequence: 240
 		},
@@ -9,9 +9,11 @@
 		GRID: [],
 		generate: function() {
 			let i = 0;
+			let j = 0;
 			let rows = this.OPTIONS.height;
 			let lead = this.OPTIONS.lead;
 			let haze = rows - lead;
+			let total = rows + lead;
 
 			// set the number of horizontal rows
 			for (; i < rows; i += 1) {
@@ -23,30 +25,23 @@
 			}
 
 			// create a block of points to render on each row
-
 			i = 0;
 
-			// console.log(this.BANDS)
-
-			for (; i < rows; i += 1) {
-				// this.BANDS[i - 1] = [];
+			for (; i < total; i += 1) {
 				this.GRID[i] = [];
-				let j = 0;
+				j = 0;
 				let benchmark = function(count, target) {
 					let required = (((rows - count) /rows) * 100);
 					return (target < required) > 0 ? "." : "";
 				}
 
 				for (; j < this.OPTIONS.sequence; j += 1) {
-					// let number = this.randomise(this.BANDS[i]);
-					let number = this.randomise(100);
-					// this.BANDS[i - 1].push(number);
+					let number = this.randomise(200 - this.BANDS[i]);
 					this.GRID[i].push(benchmark(i, number));
 				}
+			}
 
 
-
-				console.log(this.GRID)
 
 
 /*
@@ -59,7 +54,7 @@
 
 				// document.querySelector("#feedback").innerHTML += this.BANDS[i].join(",");
 				// document.querySelector("#feedback").innerHTML += "\n";
-*/			}
+*/
 
 			this.canvas();
 		},
