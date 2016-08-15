@@ -5,18 +5,22 @@
 			lead: 160,
 			sequence: 240
 		},
-		BANDS: [],// 100 -> 1
+		BANDS: [],// 100 -> 0
 		GRID: [],
 		generate: function() {
 			let i = 0;
-			let j = 0;
 			let rows = this.OPTIONS.height;
 			let lead = this.OPTIONS.lead;
 			let haze = rows - lead;
 			let total = rows + lead;
 
+			let benchmark = function(count, canDraw) {
+				let drawAt = (((rows - count) / rows) * 100);
+				return (canDraw < drawAt) > 0 ? "." : "";
+			}
+
 			// set the number of horizontal rows
-			for (; i < rows; i += 1) {
+			for (; i < total; i += 1) {
 				if (i < lead) {
 					this.BANDS.push(100);
 				} else {
@@ -25,41 +29,23 @@
 			}
 
 			// create a block of points to render on each row
-			i = 0;
-
-			for (; i < total; i += 1) {
+			for (i = 0; i < total; i += 1) {
 				this.GRID[i] = [];
-				j = 0;
-				let benchmark = function(count, target) {
-					let required = (((rows - count) /rows) * 100);
-					return (target < required) > 0 ? "." : "";
-				}
 
-				for (; j < this.OPTIONS.sequence; j += 1) {
+				for (let j = 0; j < this.OPTIONS.sequence; j += 1) {
 					let number = this.randomise(200 - this.BANDS[i]);
 					this.GRID[i].push(benchmark(i, number));
 				}
 			}
 
-
-
-
-/*
-
-
-				// document.querySelector("#output").innerHTML += this.GRID[i].join(",");
-				// document.querySelector("#output").innerHTML += "\n";
-
-				// console.log(this.BANDS)
-
-				// document.querySelector("#feedback").innerHTML += this.BANDS[i].join(",");
-				// document.querySelector("#feedback").innerHTML += "\n";
-*/
+			for (i = 0; i < lead; i += 1) {
+				this.GRID.unshift(new Array(this.OPTIONS.sequence + 1).join('.').split(''));
+			}
 
 			this.canvas();
 		},
 		canvas: function() {
-			let width = this.OPTIONS.sequence;
+			let width = this.GRID[0].length;
 			let height = this.GRID.length;
             let canvas = document.getElementById('matrix');
             let ctx = canvas.getContext('2d');
@@ -98,7 +84,7 @@
 		},
 		randomise: function(min, max) {
 			if (!max) { max = min; min = 0;}
-			return (Math.floor(Math.random() * (max - min + 1)));// + min);
+			return (Math.floor(Math.random() * (max - min + 1)));
 		},
 		init: function() {
 			this.generate();
