@@ -1,8 +1,8 @@
 (function(){
 	const DTS = {
 		OPTIONS: {
-			height: 480,//480
-			lead: 160,
+			height: 720,
+			lead: 240,
 			sequence: 240
 		},
 		BANDS: [],// 100 -> 0
@@ -81,6 +81,10 @@
             }
 
             ctx.putImageData(canvasData, 0, 0);
+
+			let dataURL = canvas.toDataURL();
+
+			document.querySelector('.bg').style.backgroundImage = "url(" + dataURL + ")";
 		},
 		randomise: function(min, max) {
 			if (!max) { max = min; min = 0;}

@@ -8,3 +8,13 @@ body {
 h1 {
 	margin: 0;
 }
+
+#matrix {
+	display: none !important;
+}
+
+.bg {
+	background-size: 10rem;
+	background-repeat-y: no-repeat;
+	height: calc(980px * 0.7);
+}
