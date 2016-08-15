@@ -1,6 +1,7 @@
 (function(){
 	const DTS = {
 		OPTIONS: {
+			buffer: 12,
 			height: 720,
 			lead: 240,
 			sequence: 240
@@ -11,6 +12,7 @@
 			let i = 0;
 			let rows = this.OPTIONS.height;
 			let lead = this.OPTIONS.lead;
+			let buffer = this.OPTIONS.buffer;
 			let haze = rows - lead;
 			let total = rows + lead;
 
@@ -38,7 +40,21 @@
 				}
 			}
 
-			for (i = 0; i < lead; i += 1) {
+			let buffered = [];
+			for (i = 0; i < buffer; i += 1) {
+				buffered[i] = [];
+
+				for (let j = 0; j < this.OPTIONS.sequence; j += 1) {
+					let number = this.randomise(200 - this.BANDS[i]);
+					buffered[i].push(benchmark(i, number));
+				}
+
+			}
+
+			this.GRID = buffered.concat(this.GRID);
+			this.GRID = buffered.concat(this.GRID);
+
+			for (i = 0; i < (lead - buffer); i += 1) {
 				this.GRID.unshift(new Array(this.OPTIONS.sequence + 1).join('.').split(''));
 			}
 
