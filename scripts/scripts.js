@@ -16,9 +16,26 @@
 			let haze = rows - lead;
 			let total = rows + lead;
 
-			let benchmark = function(count, canDraw) {
+			let benchmark = function (count, canDraw) {
 				let drawAt = (((rows - count) / rows) * 100);
 				return (canDraw < drawAt) > 0 ? "." : "";
+			}
+
+			let createrow = function (target, context) {
+				for (let j = 0; j < context.OPTIONS.sequence; j += 1) {
+					let number = context.randomise(200 - context.BANDS[i]);
+					target.push(benchmark(i, number));
+				}
+			}
+
+			let createBuffer = function (context) {
+				let buffered = [];
+				for (i = 0; i < buffer; i += 1) {
+					buffered[i] = [];
+					createrow(buffered[i], context)
+				}
+
+				return buffered;
 			}
 
 			// set the number of horizontal rows
@@ -33,27 +50,15 @@
 			// create a block of points to render on each row
 			for (i = 0; i < total; i += 1) {
 				this.GRID[i] = [];
-
-				for (let j = 0; j < this.OPTIONS.sequence; j += 1) {
-					let number = this.randomise(200 - this.BANDS[i]);
-					this.GRID[i].push(benchmark(i, number));
-				}
+				createrow(this.GRID[i], this)
 			}
 
-			let buffered = [];
-			for (i = 0; i < buffer; i += 1) {
-				buffered[i] = [];
-
-				for (let j = 0; j < this.OPTIONS.sequence; j += 1) {
-					let number = this.randomise(200 - this.BANDS[i]);
-					buffered[i].push(benchmark(i, number));
-				}
-
+			// create a number of rows buffer with sparse matrix
+			for (i = 0; i < 6; i += 1) {
+				this.GRID = createBuffer(this).concat(this.GRID);
 			}
 
-			this.GRID = buffered.concat(this.GRID);
-			this.GRID = buffered.concat(this.GRID);
-
+			// create a number of rows lead with no matrix
 			for (i = 0; i < (lead - buffer); i += 1) {
 				this.GRID.unshift(new Array(this.OPTIONS.sequence + 1).join('.').split(''));
 			}
@@ -72,7 +77,6 @@
 
             for (let y = 0; y < height; y++) {
                 for (let x = 0; x < width; x++) {
-
                     // Index of the pixel in the array
                     let idx = (x + y * canvas.width) * 4;
                     let r, g, b,
