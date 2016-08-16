@@ -4,12 +4,35 @@
 			buffer: 12,
 			height: 720,
 			lead: 240,
-			rgb: [2, 71, 191],// b: 2,71,191 | o: 252,77,30 | g: 80,140,50
+			rgb: [2, 71, 191],
 			sequence: 240
 		},
 		BANDS: [],// 100 -> 0
 		GRID: [],
-		generate: function() {
+		PALETTE: {
+			const: "jscssdcom",
+			js: [2, 71, 191],
+			css: [252,77,30],
+			dcom: [80,140,50]
+		},
+		WHEEL: {
+			red: [226,6,44],
+			orange: [255,99,71],
+			yellow: [255,212,84],
+			green: [133,187,101],
+			blue: [21,96,189],
+			purple: [104,40,96]
+		},
+		colorize: function (rgb) {
+			let tuple = rgb.split(",");
+
+			if (tuple.length === 3) {
+				this.OPTIONS.rgb = tuple;
+			} else if (this.PALETTE.const.indexOf(rgb) !== -1) {
+				this.OPTIONS.rgb = this.PALETTE[rgb];
+			}
+		},
+		generate: function () {
 			let i = 0;
 			let rows = this.OPTIONS.height;
 			let lead = this.OPTIONS.lead;
@@ -41,10 +64,8 @@
 
 			// set the number of horizontal rows
 			for (; i < total; i += 1) {
-				if (i < lead) {
-					this.BANDS.push(100);
-				} else {
-					this.BANDS.push(((rows - i) / haze) * 100);
+				if (i < lead) { this.BANDS.push(100);
+				} else { this.BANDS.push(((rows - i) / haze) * 100);
 				}	
 			}
 
@@ -66,12 +87,13 @@
 
 			this.canvas();
 		},
-		canvas: function() {
+		canvas: function () {
 			let width = this.GRID[0].length;
 			let height = this.GRID.length;
             let canvas = document.getElementById('matrix');
             let ctx = canvas.getContext('2d');
 			let canvasData = ctx.createImageData(width, height);
+			let rgb = this.OPTIONS.rgb;
 
             canvas.height = height;
             canvas.width = width;
@@ -84,9 +106,9 @@
                     	a = 255;
 
                     if (this.GRID[y][x]) {
-                    	r = 252;
-                    	g = 77;
-                    	b = 30;
+                    	r = rgb[0];
+                    	g = rgb[1];
+                    	b = rgb[2];
                     } else {
                     	r = 255;
                     	g = 255;
@@ -107,11 +129,40 @@
 
 			document.querySelector('.bg').style.backgroundImage = "url(" + dataURL + ")";
 		},
-		randomise: function(min, max) {
+		randomise: function (min, max) {
 			if (!max) { max = min; min = 0;}
 			return (Math.floor(Math.random() * (max - min + 1)));
 		},
-		init: function() {
+		search: function () {
+			function pair (string) {
+				let keyValue = string.split("=");
+
+				if (DTS[keyValue[0]]) {
+					DTS[keyValue[0]](keyValue[1]);
+				}
+			}
+
+			if (window.location.search) {
+				let queries = window.location.search.substring(1);
+				queries = queries.replace(/&amp;/gi, "&");
+
+				if (queries.indexOf("=") === -1) {
+					pair(queries);
+				} else {
+					queries = queries.split("&");
+					for (let query in queries) {
+						pair(queries[query]);
+					}
+				}
+			}
+		},
+		wheel: function (color) {
+			if (color && this.WHEEL[color]) {
+				this.OPTIONS.rgb = this.WHEEL[color];
+			}
+		},
+		init: function () {
+			this.search();
 			this.generate();
 		}
 	};
