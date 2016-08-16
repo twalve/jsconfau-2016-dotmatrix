@@ -44,18 +44,18 @@
 				return (canDraw < drawAt) > 0 ? "." : "";
 			}
 
-			let createrow = function (target, context) {
-				for (let j = 0; j < context.OPTIONS.sequence; j += 1) {
-					let number = context.randomise(200 - context.BANDS[i]);
+			let createrow = (target) => {
+				for (let j = 0; j < this.OPTIONS.sequence; j += 1) {
+					let number = this.randomise(200 - this.BANDS[i]);
 					target.push(benchmark(i, number));
 				}
 			}
 
-			let createBuffer = function (context) {
+			let createBuffer = () => {
 				let buffered = [];
 				for (i = 0; i < buffer; i += 1) {
 					buffered[i] = [];
-					createrow(buffered[i], context)
+					createrow(buffered[i])
 				}
 
 				return buffered;
@@ -73,12 +73,12 @@
 			// create a block of points to render on each row
 			for (i = 0; i < total; i += 1) {
 				this.GRID[i] = [];
-				createrow(this.GRID[i], this)
+				createrow(this.GRID[i])
 			}
 
 			// create a number of rows buffer with sparse matrix
 			for (i = 0; i < 6; i += 1) {
-				this.GRID = createBuffer(this).concat(this.GRID);
+				this.GRID = createBuffer().concat(this.GRID);
 			}
 
 			// create a number of rows lead with no matrix
