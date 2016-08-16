@@ -64,8 +64,10 @@
 
 			// set the number of horizontal rows
 			for (; i < total; i += 1) {
-				if (i < lead) { this.BANDS.push(100);
-				} else { this.BANDS.push(((rows - i) / haze) * 100);
+				if (i < lead) { 
+					this.BANDS.push(100);
+				} else { 
+					this.BANDS.push(((rows - i) / haze) * 100);
 				}	
 			}
 
@@ -90,40 +92,37 @@
 		canvas: function () {
 			let width = this.GRID[0].length;
 			let height = this.GRID.length;
-            let canvas = document.getElementById('matrix');
-            let ctx = canvas.getContext('2d');
+			let canvas = document.getElementById('matrix');
+			let ctx = canvas.getContext('2d');
 			let canvasData = ctx.createImageData(width, height);
 			let rgb = this.OPTIONS.rgb;
 
-            canvas.height = height;
-            canvas.width = width;
+			canvas.height = height;
+			canvas.width = width;
 
-            for (let y = 0; y < height; y++) {
-                for (let x = 0; x < width; x++) {
-                    // Index of the pixel in the array
-                    let idx = (x + y * canvas.width) * 4;
-                    let r, g, b,
-                    	a = 255;
+			for (let y = 0; y < height; y++) {
+				for (let x = 0; x < width; x++) {
+					// Index of the pixel in the array
+					let idx = (x + y * canvas.width) * 4;
+					let r, g, b, a = 255;
 
-                    if (this.GRID[y][x]) {
-                    	r = rgb[0];
-                    	g = rgb[1];
-                    	b = rgb[2];
-                    } else {
-                    	r = 255;
-                    	g = 255;
-                    	b = 255;
-                    }
+					if (this.GRID[y][x]) {
+						r = rgb[0];
+						g = rgb[1];
+						b = rgb[2];
+					} else {
+						r = g = b = 255;
+					}
 
-                    // Update the values of the pixel;
-                    canvasData.data[idx + 0] = r;
-                    canvasData.data[idx + 1] = g;
-                    canvasData.data[idx + 2] = b;
-                    canvasData.data[idx + 3] = a;
-                }
-            }
+					// Update the values of the pixel;
+					canvasData.data[idx + 0] = r;
+					canvasData.data[idx + 1] = g;
+					canvasData.data[idx + 2] = b;
+					canvasData.data[idx + 3] = a;
+				}
+			}
 
-            ctx.putImageData(canvasData, 0, 0);
+			ctx.putImageData(canvasData, 0, 0);
 
 			let dataURL = canvas.toDataURL();
 
