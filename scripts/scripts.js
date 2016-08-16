@@ -10,7 +10,6 @@
 		BANDS: [],// 100 -> 0
 		GRID: [],
 		PALETTE: {
-			const: "jscssdcom",
 			js: [2, 71, 191],
 			css: [252,77,30],
 			dcom: [80,140,50]
@@ -28,7 +27,7 @@
 
 			if (tuple.length === 3) {
 				this.OPTIONS.rgb = tuple;
-			} else if (this.PALETTE.const.indexOf(rgb) !== -1) {
+			} else if (this.PALETTE[rgb]) {
 				this.OPTIONS.rgb = this.PALETTE[rgb];
 			}
 		},
@@ -64,11 +63,11 @@
 
 			// set the number of horizontal rows
 			for (; i < total; i += 1) {
-				if (i < lead) { 
+				if (i < lead) {
 					this.BANDS.push(100);
-				} else { 
+				} else {
 					this.BANDS.push(((rows - i) / haze) * 100);
-				}	
+				}
 			}
 
 			// create a block of points to render on each row
