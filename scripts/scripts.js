@@ -10,7 +10,6 @@
 		BANDS: [],// 100 -> 0
 		GRID: [],
 		PALETTE: {
-			const: "jscssdcom",
 			js: [2, 71, 191],
 			css: [252,77,30],
 			dcom: [80,140,50]
@@ -28,7 +27,7 @@
 
 			if (tuple.length === 3) {
 				this.OPTIONS.rgb = tuple;
-			} else if (this.PALETTE.const.indexOf(rgb) !== -1) {
+			} else if (this.PALETTE[rgb]) {
 				this.OPTIONS.rgb = this.PALETTE[rgb];
 			}
 		},
@@ -45,18 +44,18 @@
 				return (canDraw < drawAt) > 0 ? "." : "";
 			}
 
-			let createrow = function (target, context) {
-				for (let j = 0; j < context.OPTIONS.sequence; j += 1) {
-					let number = context.randomise(200 - context.BANDS[i]);
+			let createrow = (target) => {
+				for (let j = 0; j < this.OPTIONS.sequence; j += 1) {
+					let number = this.randomise(200 - this.BANDS[i]);
 					target.push(benchmark(i, number));
 				}
 			}
 
-			let createBuffer = function (context) {
+			let createBuffer = () => {
 				let buffered = [];
 				for (i = 0; i < buffer; i += 1) {
 					buffered[i] = [];
-					createrow(buffered[i], context)
+					createrow(buffered[i])
 				}
 
 				return buffered;
@@ -64,22 +63,22 @@
 
 			// set the number of horizontal rows
 			for (; i < total; i += 1) {
-				if (i < lead) { 
+				if (i < lead) {
 					this.BANDS.push(100);
-				} else { 
+				} else {
 					this.BANDS.push(((rows - i) / haze) * 100);
-				}	
+				}
 			}
 
 			// create a block of points to render on each row
 			for (i = 0; i < total; i += 1) {
 				this.GRID[i] = [];
-				createrow(this.GRID[i], this)
+				createrow(this.GRID[i])
 			}
 
 			// create a number of rows buffer with sparse matrix
 			for (i = 0; i < 6; i += 1) {
-				this.GRID = createBuffer(this).concat(this.GRID);
+				this.GRID = createBuffer().concat(this.GRID);
 			}
 
 			// create a number of rows lead with no matrix
