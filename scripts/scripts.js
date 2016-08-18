@@ -5,7 +5,7 @@
 			height: 720,
 			lead: 240,
 			rgb: [2, 71, 191],
-			sequence: 240
+			sequence: 480
 		},
 		BANDS: [],// 100 -> 0
 		GRID: [],
