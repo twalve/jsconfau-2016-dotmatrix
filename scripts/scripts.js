@@ -24,7 +24,7 @@
 			purple: [104,40,96]
 		},
 		colorize: function (rgb) {
-			let tuple = rgb.split(",");
+			const tuple = rgb.split(",");
 
 			if (tuple.length === 3) {
 				this.OPTIONS.rgb = tuple;
@@ -34,26 +34,26 @@
 		},
 		generate: function () {
 			let i = 0;
-			let rows = this.OPTIONS.height;
-			let lead = this.OPTIONS.lead;
-			let buffer = this.OPTIONS.buffer;
-			let haze = rows - lead;
-			let total = rows + lead;
+			const rows = this.OPTIONS.height;
+			const lead = this.OPTIONS.lead;
+			const buffer = this.OPTIONS.buffer;
+			const haze = rows - lead;
+			const total = rows + lead;
 
-			let benchmark = function (count, canDraw) {
-				let drawAt = (((rows - count) / rows) * 100);
+			const benchmark = function (count, canDraw) {
+				const drawAt = (((rows - count) / rows) * 100);
 				return (canDraw < drawAt) > 0 ? "." : "";
 			}
 
-			let createrow = (target) => {
+			const createrow = (target) => {
 				for (let j = 0; j < this.OPTIONS.sequence; j += 1) {
-					let number = this.randomise(200 - this.BANDS[i]);
+					const number = this.randomise(200 - this.BANDS[i]);
 					target.push(benchmark(i, number));
 				}
 			}
 
-			let createBuffer = () => {
-				let buffered = [];
+			const createBuffer = () => {
+				const buffered = [];
 				for (i = 0; i < buffer; i += 1) {
 					buffered[i] = [];
 					createrow(buffered[i])
@@ -90,12 +90,12 @@
 			this.canvas();
 		},
 		canvas: function () {
-			let width = this.GRID[0].length;
-			let height = this.GRID.length;
-			let canvas = document.getElementById('matrix');
-			let ctx = canvas.getContext('2d');
-			let canvasData = ctx.createImageData(width, height);
-			let rgb = this.OPTIONS.rgb;
+			const width = this.GRID[0].length;
+			const height = this.GRID.length;
+			const canvas = document.getElementById('matrix');
+			const ctx = canvas.getContext('2d');
+			const canvasData = ctx.createImageData(width, height);
+			const rgb = this.OPTIONS.rgb;
 
 			canvas.height = height;
 			canvas.width = width;
@@ -103,7 +103,7 @@
 			for (let y = 0; y < height; y++) {
 				for (let x = 0; x < width; x++) {
 					// Index of the pixel in the array
-					let idx = (x + y * canvas.width) * 4;
+					const idx = (x + y * canvas.width) * 4;
 					let r, g, b, a = 255;
 
 					if (this.GRID[y][x]) {
@@ -124,7 +124,7 @@
 
 			ctx.putImageData(canvasData, 0, 0);
 
-			let dataURL = canvas.toDataURL();
+			const dataURL = canvas.toDataURL();
 
 			document.querySelector('.bg').style.backgroundImage = "url(" + dataURL + ")";
 		},
@@ -134,7 +134,7 @@
 		},
 		search: function () {
 			function pair (string) {
-				let keyValue = string.split("=");
+				const keyValue = string.split("=");
 
 				if (DTS[keyValue[0]]) {
 					DTS[keyValue[0]](keyValue[1]);
@@ -149,7 +149,7 @@
 					pair(queries);
 				} else {
 					queries = queries.split("&");
-					for (let query in queries) {
+					for (const query in queries) {
 						pair(queries[query]);
 					}
 				}
