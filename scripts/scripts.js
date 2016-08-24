@@ -14,6 +14,7 @@
 			css: [252,77,30],
 			dcom: [80,140,50]
 		},
+		TARGET: null,
 		WHEEL: {
 			pink: [244,71,191],
 			red: [226,6,44],
@@ -60,7 +61,7 @@
 
 			const dataURL = canvas.toDataURL();
 
-			document.querySelector('.bg').style.backgroundImage = "url(" + dataURL + ")";
+			this.TARGET.style.backgroundImage = "url(" + dataURL + ")";
 		},
 		colorise: function (rgb) {
 			const tuple = (typeof rgb === "string") ? rgb.split(",") : rgb;
@@ -70,6 +71,16 @@
 			} else if (this.PALETTE[rgb]) {
 				this.OPTIONS.rgb = this.PALETTE[rgb];
 			}
+		},
+		enshadow: function (selector) {
+			const canvas = document.createElement("canvas");
+			canvas.id = "MATRIX";
+			const div = document.createElement("div");
+			div.id = "VEIL";
+
+			this.TARGET = document.querySelector(selector||"body");
+			document.body.appendChild(canvas);
+			document.body.appendChild(div);
 		},
 		generate: function () {
 			let i = 0;
@@ -135,11 +146,19 @@
 				if (color.length === 3) {// r, g, b
 					this.colorise(color);
 				}
+				var css = document.createElement("style");
+				css.setAttribute("rel", "stylesheet");
+				css.innerHTML = "#VEIL {background-image: linear-gradient(" + this.rgb(this.OPTIONS.rgb) + ", transparent);}";
+
+				document.head.appendChild(css);
 			}
 		},
 		randomise: function (min, max) {
 			if (!max) { max = min; min = 0;}
 			return (Math.floor(Math.random() * (max - min + 1)));
+		},
+		rgb: function(rgb) {
+			return ["rgb(",[rgb[0], rgb[1], rgb[2]].join(","),")"].join("");
 		},
 		search: function () {
 			function pair (string) {
@@ -164,22 +183,19 @@
 				}
 			}
 		},
-		enshadow: function () {
-			const canvas = document.createElement("canvas");
-			canvas.id = "MATRIX";
-
-			document.body.appendChild(canvas);
-		},
 		wheel: function (color) {
 			if (color && this.WHEEL[color]) {
 				this.OPTIONS.rgb = this.WHEEL[color];
 			}
 		},
-		init: function () {
-			this.search();
-			this.enshadow();
+		setup: function () {
+			this.enshadow(".bg");
 			this.localise();
 			this.generate();
+		},
+		init: function () {
+			this.search();
+			this.setup();
 		}
 	};
 
