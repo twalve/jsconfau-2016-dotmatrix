@@ -128,6 +128,15 @@
 
 			document.querySelector('.bg').style.backgroundImage = "url(" + dataURL + ")";
 		},
+		localise: function () {
+			const local = document.querySelector('#dtmtrx').innerHTML;
+			if (local.length) {
+				let color = local.replace(/\s/gi,"").split("[")[1].split("]")[0].split(",")
+				if (color.length === 3) {// r, g, b
+					this.OPTIONS.rgb = color;
+				}
+			}
+		},
 		randomise: function (min, max) {
 			if (!max) { max = min; min = 0;}
 			return (Math.floor(Math.random() * (max - min + 1)));
@@ -162,6 +171,7 @@
 		},
 		init: function () {
 			this.search();
+			this.localise();
 			this.generate();
 		}
 	};
