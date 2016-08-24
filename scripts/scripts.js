@@ -84,7 +84,7 @@
 				return (canDraw < drawAt) > 0 ? "." : "";
 			}
 
-			const createrow = (target) => {
+			const createRow = (target) => {
 				for (let j = 0; j < this.OPTIONS.sequence; j += 1) {
 					const number = this.randomise(200 - this.BANDS[i]);
 					target.push(benchmark(i, number));
@@ -95,7 +95,7 @@
 				const buffered = [];
 				for (i = 0; i < buffer; i += 1) {
 					buffered[i] = [];
-					createrow(buffered[i])
+					createRow(buffered[i])
 				}
 
 				return buffered;
@@ -113,7 +113,7 @@
 			// create a block of points to render on each row
 			for (i = 0; i < total; i += 1) {
 				this.GRID[i] = [];
-				createrow(this.GRID[i])
+				createRow(this.GRID[i])
 			}
 
 			// create a number of rows buffer with sparse matrix
