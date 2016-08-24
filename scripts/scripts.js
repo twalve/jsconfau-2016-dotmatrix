@@ -63,7 +63,7 @@
 			document.querySelector('.bg').style.backgroundImage = "url(" + dataURL + ")";
 		},
 		colorize: function (rgb) {
-			const tuple = rgb.split(",");
+			const tuple = (typeof rgb === "string") ? rgb.split(",") : rgb;
 
 			if (tuple.length === 3) {
 				this.OPTIONS.rgb = tuple;
@@ -133,11 +133,9 @@
 			if (local.length) {
 				let color = local.replace(/\s/gi,"").split("[")[1].split("]")[0].split(",")
 				if (color.length === 3) {// r, g, b
-					this.OPTIONS.rgb = color;
+					this.OPTIONS.rgb = this.colorize(color);
 				}
 			}
-
-
 		},
 		randomise: function (min, max) {
 			if (!max) { max = min; min = 0;}
