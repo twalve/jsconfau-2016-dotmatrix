@@ -1,20 +1,18 @@
-body {
-	background-color: white;
-	color: black;
-	font-family: 'Lato', sans-serif;
-	margin: 0;
-}
-
-h1 {
-	margin: 0;
-}
-
-#matrix {
-	display: none !important;
-}
-
+body,
 .bg {
 	background-size: 10rem;
 	background-repeat-y: no-repeat;
-	height: calc(980px * 0.7);
+	height: calc(980px * 0.7);	
+}
+
+#MATRIX {
+	display: none !important;
+}
+
+#VEIL {
+	height: 16rem;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
 }
