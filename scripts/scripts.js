@@ -26,7 +26,7 @@
 		canvas: function () {
 			const width = this.GRID[0].length;
 			const height = this.GRID.length;
-			const canvas = document.getElementById('matrix');
+			const canvas = document.getElementById('MATRIX');
 			const ctx = canvas.getContext('2d');
 			const canvasData = ctx.createImageData(width, height);
 			const rgb = this.OPTIONS.rgb;
@@ -62,7 +62,7 @@
 
 			document.querySelector('.bg').style.backgroundImage = "url(" + dataURL + ")";
 		},
-		colorize: function (rgb) {
+		colorise: function (rgb) {
 			const tuple = (typeof rgb === "string") ? rgb.split(",") : rgb;
 
 			if (tuple.length === 3) {
@@ -133,7 +133,7 @@
 			if (local.length) {
 				let color = local.replace(/\s/gi,"").split("[")[1].split("]")[0].split(",")
 				if (color.length === 3) {// r, g, b
-					this.OPTIONS.rgb = this.colorize(color);
+					this.colorise(color);
 				}
 			}
 		},
@@ -164,6 +164,12 @@
 				}
 			}
 		},
+		enshadow: function () {
+			const canvas = document.createElement("canvas");
+			canvas.id = "MATRIX";
+
+			document.body.appendChild(canvas);
+		},
 		wheel: function (color) {
 			if (color && this.WHEEL[color]) {
 				this.OPTIONS.rgb = this.WHEEL[color];
@@ -171,6 +177,7 @@
 		},
 		init: function () {
 			this.search();
+			this.enshadow();
 			this.localise();
 			this.generate();
 		}
