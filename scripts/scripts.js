@@ -23,6 +23,45 @@
 			blue: [21,96,189],
 			purple: [104,40,96]
 		},
+		canvas: function () {
+			const width = this.GRID[0].length;
+			const height = this.GRID.length;
+			const canvas = document.getElementById('matrix');
+			const ctx = canvas.getContext('2d');
+			const canvasData = ctx.createImageData(width, height);
+			const rgb = this.OPTIONS.rgb;
+
+			canvas.height = height;
+			canvas.width = width;
+
+			for (let y = 0; y < height; y++) {
+				for (let x = 0; x < width; x++) {
+					// Index of the pixel in the array
+					const idx = (x + y * canvas.width) * 4;
+					let r, g, b, a = 255;
+
+					if (this.GRID[y][x]) {
+						r = rgb[0];
+						g = rgb[1];
+						b = rgb[2];
+					} else {
+						r = g = b = 255;
+					}
+
+					// Update the values of the pixel;
+					canvasData.data[idx + 0] = r;
+					canvasData.data[idx + 1] = g;
+					canvasData.data[idx + 2] = b;
+					canvasData.data[idx + 3] = a;
+				}
+			}
+
+			ctx.putImageData(canvasData, 0, 0);
+
+			const dataURL = canvas.toDataURL();
+
+			document.querySelector('.bg').style.backgroundImage = "url(" + dataURL + ")";
+		},
 		colorize: function (rgb) {
 			const tuple = rgb.split(",");
 
@@ -89,45 +128,6 @@
 
 			this.canvas();
 		},
-		canvas: function () {
-			const width = this.GRID[0].length;
-			const height = this.GRID.length;
-			const canvas = document.getElementById('matrix');
-			const ctx = canvas.getContext('2d');
-			const canvasData = ctx.createImageData(width, height);
-			const rgb = this.OPTIONS.rgb;
-
-			canvas.height = height;
-			canvas.width = width;
-
-			for (let y = 0; y < height; y++) {
-				for (let x = 0; x < width; x++) {
-					// Index of the pixel in the array
-					const idx = (x + y * canvas.width) * 4;
-					let r, g, b, a = 255;
-
-					if (this.GRID[y][x]) {
-						r = rgb[0];
-						g = rgb[1];
-						b = rgb[2];
-					} else {
-						r = g = b = 255;
-					}
-
-					// Update the values of the pixel;
-					canvasData.data[idx + 0] = r;
-					canvasData.data[idx + 1] = g;
-					canvasData.data[idx + 2] = b;
-					canvasData.data[idx + 3] = a;
-				}
-			}
-
-			ctx.putImageData(canvasData, 0, 0);
-
-			const dataURL = canvas.toDataURL();
-
-			document.querySelector('.bg').style.backgroundImage = "url(" + dataURL + ")";
-		},
 		localise: function () {
 			const local = document.querySelector('#dtmtrx').innerHTML;
 			if (local.length) {
@@ -136,6 +136,8 @@
 					this.OPTIONS.rgb = color;
 				}
 			}
+
+
 		},
 		randomise: function (min, max) {
 			if (!max) { max = min; min = 0;}
