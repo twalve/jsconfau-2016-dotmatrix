@@ -2,28 +2,14 @@
 	const DTS = {
 		OPTIONS: {
 			buffer: 12,
-			height: 720,
+			height: 900,
 			lead: 240,
 			rgb: [2, 71, 191],
 			sequence: 480
 		},
 		BANDS: [],// 100 -> 0
 		GRID: [],
-		PALETTE: {
-			js: [2, 71, 191],
-			css: [252,77,30],
-			dcom: [80,140,50]
-		},
 		TARGET: null,
-		WHEEL: {
-			pink: [244,71,191],
-			red: [226,6,44],
-			orange: [255,99,71],
-			yellow: [255,212,84],
-			green: [133,187,101],
-			blue: [21,96,189],
-			purple: [104,40,96]
-		},
 		canvas: function () {
 			const width = this.GRID[0].length;
 			const height = this.GRID.length;
@@ -66,11 +52,7 @@
 		colorise: function (rgb) {
 			const tuple = (typeof rgb === "string") ? rgb.split(",") : rgb;
 
-			if (tuple.length === 3) {
-				this.OPTIONS.rgb = tuple;
-			} else if (this.PALETTE[rgb]) {
-				this.OPTIONS.rgb = this.PALETTE[rgb];
-			}
+			if (tuple.length === 3) { this.OPTIONS.rgb = tuple; }
 		},
 		enshadow: function (selector) {
 			const canvas = document.createElement("canvas");
@@ -160,41 +142,12 @@
 		rgb: function(rgb) {
 			return ["rgb(",[rgb[0], rgb[1], rgb[2]].join(","),")"].join("");
 		},
-		search: function () {
-			function pair (string) {
-				const keyValue = string.split("=");
-
-				if (DTS[keyValue[0]]) {
-					DTS[keyValue[0]](keyValue[1]);
-				}
-			}
-
-			if (window.location.search) {
-				let queries = window.location.search.substring(1);
-				queries = queries.replace(/&amp;/gi, "&");
-
-				if (queries.indexOf("=") === -1) {
-					pair(queries);
-				} else {
-					queries = queries.split("&");
-					for (const query in queries) {
-						pair(queries[query]);
-					}
-				}
-			}
-		},
-		wheel: function (color) {
-			if (color && this.WHEEL[color]) {
-				this.OPTIONS.rgb = this.WHEEL[color];
-			}
-		},
 		setup: function () {
 			this.enshadow(".bg");
 			this.localise();
 			this.generate();
 		},
 		init: function () {
-			this.search();
 			this.setup();
 		}
 	};
