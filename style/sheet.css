@@ -1,6 +1,6 @@
 body,
 .bg {
-	background-size: 10rem;
+	background-size: 16rem;
 	background-repeat-y: no-repeat;
 	height: calc(980px * 0.7);	
 }
@@ -10,7 +10,7 @@ body,
 }
 
 #VEIL {
-	height: 16rem;
+	height: 32rem;
 	left: 0;
 	position: absolute;
 	right: 0;
