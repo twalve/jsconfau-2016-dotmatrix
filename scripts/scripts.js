@@ -38,11 +38,11 @@
 			canvas.height = height;
 			canvas.width = width;
 
-			for (let y = 0; y < height; y++) {
-				for (let x = 0; x < width; x++) {
+			for (var y = 0; y < height; y++) {
+				for (var x = 0; x < width; x++) {
 					// Index of the pixel in the array
 					const idx = (x + y * canvas.width) * 4;
-					let r, g, b, a = 255;
+					var r, g, b, a = 255;
 
 					if (this.GRID[y][x]) {
 						r = rgb[0];
@@ -91,7 +91,7 @@
 			document.body.appendChild(canvas);
 		},
 		generate: function () {
-			let i = 0;
+			var i = 0;
 			const rows = this.OPTIONS.height;
 			const lead = this.OPTIONS.lead;
 			const buffer = this.OPTIONS.buffer;
@@ -104,7 +104,7 @@
 			}
 
 			const createRow = (target) => {
-				for (let j = 0; j < this.OPTIONS.sequence; j += 1) {
+				for (var j = 0; j < this.OPTIONS.sequence; j += 1) {
 					const number = this.randomise(200 - this.BANDS[i]);
 					target.push(benchmark(i, number));
 				}
@@ -151,7 +151,7 @@
 			const local = document.querySelector('#dtmtrx').innerHTML;
 
 			if (local.length) {
-				let color = local.replace(/\s/gi,"").split("[")[1].split("]")[0].split(",")
+				var color = local.replace(/\s/gi,"").split("[")[1].split("]")[0].split(",")
 				if (color.length === 3) {// r, g, b
 					this.colorise(color);
 				}
