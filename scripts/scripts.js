@@ -1,5 +1,5 @@
 (function(){
-	const DTS = {
+	var DTS = {
 		OPTIONS: {
 			buffer: 12,
 			height: 900,
@@ -10,10 +10,10 @@
 		BANDS: [],// 100 -> 0
 		GRID: [],
 		STYLESHEET: [
-			"#MATRIX div {",
-				"background-size: 25rem;",
-				"background-repeat-y: no-repeat;",
-				"height: calc(980px * 0.7);",
+			"#MATRIX {",
+				"position: absolute;",
+				"width: 100%;",
+				"z-index: -1",
 			"}",
 			"#MATRIX::after {",
 				"content: '';",
@@ -23,17 +23,22 @@
 				"right: 0;",
 				"top: 0;",
 			"}",
+			"#MATRIX div {",
+				"background-size: 25rem;",
+				"background-repeat-y: no-repeat;",
+				"height: calc(980px * 0.7);",
+			"}",
 			"#CANVAS {",
 				"display: none !important;",
 			"}"
 		],
 		canvas: function () {
-			const width = this.GRID[0].length;
-			const height = this.GRID.length;
-			const canvas = document.getElementById('CANVAS');
-			const ctx = canvas.getContext('2d');
-			const canvasData = ctx.createImageData(width, height);
-			const rgb = this.OPTIONS.rgb;
+			var width = this.GRID[0].length;
+			var height = this.GRID.length;
+			var canvas = document.getElementById('CANVAS');
+			var ctx = canvas.getContext('2d');
+			var canvasData = ctx.createImageData(width, height);
+			var rgb = this.OPTIONS.rgb;
 
 			canvas.height = height;
 			canvas.width = width;
@@ -41,7 +46,7 @@
 			for (var y = 0; y < height; y++) {
 				for (var x = 0; x < width; x++) {
 					// Index of the pixel in the array
-					const idx = (x + y * canvas.width) * 4;
+					var idx = (x + y * canvas.width) * 4;
 					var r, g, b, a = 255;
 
 					if (this.GRID[y][x]) {
@@ -62,26 +67,26 @@
 
 			ctx.putImageData(canvasData, 0, 0);
 
-			const dataURL = canvas.toDataURL();
+			var dataURL = canvas.toDataURL();
 
 			document.querySelector("#MATRIX div").style.backgroundImage = "url(" + dataURL + ")";
 			canvas.parentElement.removeChild(canvas);
 		},
 		colorise: function (rgb) {
-			const tuple = (typeof rgb === "string") ? rgb.split(",") : rgb;
+			var tuple = (typeof rgb === "string") ? rgb.split(",") : rgb;
 
 			if (tuple.length === 3) { this.OPTIONS.rgb = tuple; }
 		},
 		enshadow: function (selector) {
-			const canvas = document.createElement("canvas");
+			var canvas = document.createElement("canvas");
 			canvas.id = "CANVAS";
 
-			const div = document.createElement("div");
+			var div = document.createElement("div");
 			div.id = "MATRIX";
 
-			const child = document.createElement("div");
+			var child = document.createElement("div");
 
-			const stylesheet = document.createElement("style");
+			var stylesheet = document.createElement("style");
 			stylesheet.innerHTML = this.STYLESHEET.join("");
 			stylesheet.id = "DTMTRX";
 
@@ -92,26 +97,26 @@
 		},
 		generate: function () {
 			var i = 0;
-			const rows = this.OPTIONS.height;
-			const lead = this.OPTIONS.lead;
-			const buffer = this.OPTIONS.buffer;
-			const haze = rows - lead;
-			const total = rows + lead;
+			var rows = this.OPTIONS.height;
+			var lead = this.OPTIONS.lead;
+			var buffer = this.OPTIONS.buffer;
+			var haze = rows - lead;
+			var total = rows + lead;
 
-			const benchmark = function (count, canDraw) {
-				const drawAt = (((rows - count) / rows) * 100);
+			var benchmark = function (count, canDraw) {
+				var drawAt = (((rows - count) / rows) * 100);
 				return (canDraw < drawAt) > 0 ? "." : "";
 			}
 
-			const createRow = (target) => {
+			var createRow = (target) => {
 				for (var j = 0; j < this.OPTIONS.sequence; j += 1) {
-					const number = this.randomise(200 - this.BANDS[i]);
+					var number = this.randomise(200 - this.BANDS[i]);
 					target.push(benchmark(i, number));
 				}
 			}
 
-			const createBuffer = () => {
-				const buffered = [];
+			var createBuffer = () => {
+				var buffered = [];
 				for (i = 0; i < buffer; i += 1) {
 					buffered[i] = [];
 					createRow(buffered[i])
@@ -148,7 +153,7 @@
 			this.canvas();
 		},
 		localise: function () {
-			const local = document.querySelector('#dtmtrx').innerHTML;
+			var local = document.querySelector('#dtmtrx').innerHTML;
 
 			if (local.length) {
 				var color = local.replace(/\s/gi,"").split("[")[1].split("]")[0].split(",")
