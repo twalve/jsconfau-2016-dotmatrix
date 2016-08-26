@@ -9,11 +9,28 @@
 		},
 		BANDS: [],// 100 -> 0
 		GRID: [],
-		TARGET: null,
+		STYLESHEET: [
+			"#MATRIX div {",
+				"background-size: 25rem;",
+				"background-repeat-y: no-repeat;",
+				"height: calc(980px * 0.7);",
+			"}",
+			"#MATRIX::after {",
+				"content: '';",
+				"height: 50rem;",
+				"left: 0;",
+				"position: absolute;",
+				"right: 0;",
+				"top: 0;",
+			"}",
+			"#CANVAS {",
+				"display: none !important;",
+			"}"
+		],
 		canvas: function () {
 			const width = this.GRID[0].length;
 			const height = this.GRID.length;
-			const canvas = document.getElementById('MATRIX');
+			const canvas = document.getElementById('CANVAS');
 			const ctx = canvas.getContext('2d');
 			const canvasData = ctx.createImageData(width, height);
 			const rgb = this.OPTIONS.rgb;
@@ -47,7 +64,8 @@
 
 			const dataURL = canvas.toDataURL();
 
-			this.TARGET.style.backgroundImage = "url(" + dataURL + ")";
+			document.querySelector("#MATRIX div").style.backgroundImage = "url(" + dataURL + ")";
+			canvas.parentElement.removeChild(canvas);
 		},
 		colorise: function (rgb) {
 			const tuple = (typeof rgb === "string") ? rgb.split(",") : rgb;
@@ -56,13 +74,21 @@
 		},
 		enshadow: function (selector) {
 			const canvas = document.createElement("canvas");
-			canvas.id = "MATRIX";
-			const div = document.createElement("div");
-			div.id = "VEIL";
+			canvas.id = "CANVAS";
 
-			this.TARGET = document.querySelector(selector||"body");
+			const div = document.createElement("div");
+			div.id = "MATRIX";
+
+			const child = document.createElement("div");
+
+			const stylesheet = document.createElement("style");
+			stylesheet.innerHTML = this.STYLESHEET.join("");
+			stylesheet.id = "DTMTRX";
+
+			document.head.appendChild(stylesheet);
+			div.appendChild(child);
+			document.body.insertBefore(div, document.body.firstChild);
 			document.body.appendChild(canvas);
-			document.body.appendChild(div);
 		},
 		generate: function () {
 			let i = 0;
@@ -123,16 +149,13 @@
 		},
 		localise: function () {
 			const local = document.querySelector('#dtmtrx').innerHTML;
+
 			if (local.length) {
 				let color = local.replace(/\s/gi,"").split("[")[1].split("]")[0].split(",")
 				if (color.length === 3) {// r, g, b
 					this.colorise(color);
 				}
-				var css = document.createElement("style");
-				css.setAttribute("rel", "stylesheet");
-				css.innerHTML = "#VEIL {background-image: linear-gradient(" + this.rgb(this.OPTIONS.rgb) + ", transparent);}";
-
-				document.head.appendChild(css);
+				document.querySelector('#DTMTRX').innerHTML += "#MATRIX::after {background-image: linear-gradient(" + this.rgb(this.OPTIONS.rgb) + ", transparent);}";
 			}
 		},
 		randomise: function (min, max) {
