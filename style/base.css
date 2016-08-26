@@ -1,6 +1,10 @@
+html {
+    font-size: 62.5%; /* blarrgh */
+}
+
 body {
 	background-color: white;
-	color: black;
+	color: white;
 	font-family: 'Lato', sans-serif;
 	margin: 0;
 }
