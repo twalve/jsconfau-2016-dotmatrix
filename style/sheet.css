@@ -1,18 +1,31 @@
-body,
-.bg {
-	background-size: 16rem;
-	background-repeat-y: no-repeat;
-	height: calc(980px * 0.7);	
+main > div > header p {
+	display: inline-block;
+	flex: 1;
+	margin: 0;
 }
 
-#MATRIX {
-	display: none !important;
+main > div > header a {
+	border-bottom: 2px solid transparent;
+	color: inherit;
+	display: inline-block;
+	font-size: 2.2rem;
+	margin-left: 2rem;
+	text-decoration: none;
 }
 
-#VEIL {
-	height: 32rem;
-	left: 0;
-	position: absolute;
-	right: 0;
-	top: 0;
+main > div > header a:hover {
+    border-bottom: .2rem solid;
+}
+
+.logo {
+	left: 50%;
+	max-width: 50rem;
+	position: fixed;
+	top: 13rem;
+	transform: translateX(-50%);
+}
+
+.logo path {
+	fill: #fff;
+	transition: fill 650ms ease-in-out;
 }

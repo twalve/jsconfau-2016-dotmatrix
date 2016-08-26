@@ -5,8 +5,12 @@ html {
 body {
 	background-color: white;
 	color: white;
-	font-family: 'Lato', sans-serif;
+	font-family: 'Maison Neue Mono', sans-serif;
 	margin: 0;
+}
+
+main div  {
+	padding: 1.6rem;	
 }
 
 h1 {
