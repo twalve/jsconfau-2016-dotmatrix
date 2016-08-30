@@ -26,6 +26,15 @@ main > div > header a:hover {
 }
 
 .logo path {
-	fill: #fff;
+	fill: white;
 	transition: fill 650ms ease-in-out;
+}
+
+/* switch the brands */
+.brand-jsconf #cssconf {
+	display: none;
+}
+
+.brand-cssconf #jsconf {
+	display: none;
 }
