@@ -108,14 +108,14 @@
 				return (canDraw < drawAt) > 0 ? "." : "";
 			}
 
-			var createRow = (target) => {
+			var createRow = function (target) {
 				for (var j = 0; j < this.OPTIONS.sequence; j += 1) {
 					var number = this.randomise(200 - this.BANDS[i]);
 					target.push(benchmark(i, number));
 				}
 			}
 
-			var createBuffer = () => {
+			var createBuffer = function () {
 				var buffered = [];
 				for (i = 0; i < buffer; i += 1) {
 					buffered[i] = [];
@@ -167,7 +167,7 @@
 			if (!max) { max = min; min = 0;}
 			return (Math.floor(Math.random() * (max - min + 1)));
 		},
-		rgb: function(rgb) {
+		rgb: function (rgb) {
 			return ["rgb(",[rgb[0], rgb[1], rgb[2]].join(","),")"].join("");
 		},
 		setup: function () {
