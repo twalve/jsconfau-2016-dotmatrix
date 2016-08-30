@@ -67,7 +67,7 @@
 
 			ctx.putImageData(canvasData, 0, 0);
 
-			var dataURL = canvas.toDataURL();
+			var dataURL = canvas.toDataURL("image/png");
 
 			document.querySelector("#MATRIX div").style.backgroundImage = "url(" + dataURL + ")";
 			canvas.parentElement.removeChild(canvas);
