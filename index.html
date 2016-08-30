@@ -5,8 +5,71 @@
 		<meta name=viewport content="width=device-width, initial-scale=1">
 		<title>matrix</title>
 
-		<link rel=stylesheet href="style/base.css">
-		<link rel=stylesheet href="style/sheet.css">
+		<style>
+			html {
+			    font-size: 62.5%; /* blarrgh */
+			}
+
+			body {
+				background-color: white;
+				color: white;
+				font-family: 'Maison Neue Mono', sans-serif;
+				margin: 0;
+			}
+
+			main div  {
+				padding: 1.6rem;	
+			}
+
+			h1 {
+				margin: 0;
+			}
+
+
+			main > div > header p {
+				display: inline-block;
+				flex: 1;
+				margin: 0;
+			}
+
+			main > div > header a {
+				border-bottom: 2px solid transparent;
+				color: inherit;
+				display: inline-block;
+				font-size: 2.2rem;
+				margin-left: 2rem;
+				text-decoration: none;
+			}
+
+			main > div > header a:hover {
+			    border-bottom: .2rem solid;
+			}
+
+			.logo {
+				left: 50%;
+				max-width: 50rem;
+				position: fixed;
+				top: 13rem;
+				-webkit-transform: translateX(-50%);
+				transform: translateX(-50%);
+			}
+
+			.logo path {
+				fill: white;
+				transition: fill 650ms ease-in-out;
+			}
+
+			/* switch the brands */
+			.brand-jsconf #cssconf {
+				display: none;
+			}
+
+			.brand- #jsconf,
+			.brand-cssconf #jsconf {
+				display: none;
+			}
+		</style>
+
 		<style>
 			a[href*=cssconf] {
 				border-bottom: .2rem solid;
