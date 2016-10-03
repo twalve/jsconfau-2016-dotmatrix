@@ -10,9 +10,29 @@ body {
 }
 
 main div  {
-	padding: 1.6rem;	
+	padding: 1.6rem;
 }
 
 h1 {
 	margin: 0;
+}
+
+
+main > div > header p {
+	display: inline-block;
+	flex: 1;
+	margin: 0;
+}
+
+main > div > header a {
+	border-bottom: 2px solid transparent;
+	color: inherit;
+	display: inline-block;
+	font-size: 2.2rem;
+	margin-left: 2rem;
+	text-decoration: none;
+}
+
+main > div > header a:hover {
+    border-bottom: .2rem solid;
 }

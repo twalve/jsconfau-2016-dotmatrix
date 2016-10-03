@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html lang=en>
+	<head>
+		<meta charset=UTF-8>
+		<meta name=viewport content="width=device-width, initial-scale=1">
+		<title>matrix</title>
+
+		<style>
+			html {
+			    font-size: 62.5%; /* blarrgh */
+			}
+
+			body {
+				background-color: white;
+				color: white;
+				font-family: 'Maison Neue Mono', sans-serif;
+				margin: 0;
+			}
+
+			main div  {
+				padding: 1.6rem;
+			}
+
+			h1 {
+				margin: 0;
+			}
+
+
+			main > div > header p {
+				display: inline-block;
+				flex: 1;
+				margin: 0;
+			}
+
+			main > div > header a {
+				border-bottom: 2px solid transparent;
+				color: inherit;
+				display: inline-block;
+				font-size: 2.2rem;
+				margin-left: 2rem;
+				text-decoration: none;
+			}
+
+			main > div > header a:hover {
+			    border-bottom: .2rem solid;
+			}
+
+
+		</style>
+
+
+	</head>
+
+	<body class="single">
+		<main role=main id=main class=main>
+			<div class="bg">
+				<header>
+					<h1></h1>
+				</header>
+				<div id="cssconf"></div>
+				<div id="jsconf"></div>
+				<footer></footer>
+			</div>
+		</main>
+
+		<script id="dtmtrx" src="scripts/scripts.js"></script>
+		<script src="scripts/brandish.js"></script>
+		<script>
+			var canvas = document.createElement("canvas");
+			canvas.id = "CANVAS";
+			document.body.appendChild(canvas);
+
+			DTS.OPTIONS.rgb = [
+				(Math.floor(Math.random() * (256))), 
+				(Math.floor(Math.random() * (256))), 
+				(Math.floor(Math.random() * (256)))
+			];
+			DTS.generate();
+
+			document.querySelector('#DTMTRX').innerHTML += "#MATRIX::after {background-image: linear-gradient(" + DTS.rgb(DTS.OPTIONS.rgb) + ", transparent);}";
+
+			document.title = DTS.OPTIONS.rgb;
+
+		</script>
+	</body>
+</html>

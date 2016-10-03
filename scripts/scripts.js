@@ -40,6 +40,8 @@
 			var canvasData = ctx.createImageData(width, height);
 			var rgb = this.OPTIONS.rgb;
 
+
+
 			canvas.height = height;
 			canvas.width = width;
 

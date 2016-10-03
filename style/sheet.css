@@ -19,15 +19,20 @@ main > div > header a:hover {
 
 .logo {
 	left: 50%;
-	max-width: 50rem;
-	position: fixed;
-	top: 13rem;
+	max-width: 36rem;
 	transform: translateX(-50%);
 }
 
 .logo path {
 	fill: white;
 	transition: fill 650ms ease-in-out;
+}
+
+.logo rect {
+		fill: none;
+    height: 100%;
+    stroke: white;
+		width: 100%;
 }
 
 /* switch the brands */
